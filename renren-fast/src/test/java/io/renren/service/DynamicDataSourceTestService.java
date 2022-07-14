@@ -11,7 +11,9 @@ package io.renren.service;
 import io.renren.datasource.annotation.DataSource;
 import io.renren.modules.sys.dao.SysUserDao;
 import io.renren.modules.sys.entity.SysUserEntity;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class DynamicDataSourceTestService {
     @Autowired
     private SysUserDao sysUserDao;
 
+    @Test
     @Transactional
     public void updateUser(Long id){
         SysUserEntity user = new SysUserEntity();

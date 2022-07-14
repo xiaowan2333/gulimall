@@ -37,13 +37,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<CategoryEntity> categorys = baseMapper.selectList(null);
         //过滤出一级标签
         List<CategoryEntity> level1 = categorys.stream().
-                filter(categoryEntity -> categoryEntity.getParentCid()== 0).
-                map(menu->{
-                    menu.setChildren(getChildrens(menu,categorys));
+                filter(categoryEntity -> categoryEntity.getParentCid() == 0).
+                map(menu -> {
+                    menu.setChildren(getChildrens(menu, categorys));
                     return menu;
                 }).
-                sorted((menu1,menu2)->{
-                    return ((menu1.getSort()==null?0:menu1.getSort()))-(menu2.getSort()==null?0:menu2.getSort());
+                sorted((menu1, menu2) -> {
+                    return ((menu1.getSort() == null ? 0 : menu1.getSort())) - (menu2.getSort() == null ? 0 : menu2.getSort());
                 }).
                 collect(Collectors.toList());
         return level1;

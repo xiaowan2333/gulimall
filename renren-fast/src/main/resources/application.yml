@@ -8,7 +8,6 @@ server:
   connection-timeout: 5000ms
   servlet:
     context-path: /renren-fast
-
 spring:
   # 环境 dev|test|prod
   profiles:
@@ -41,7 +40,6 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 #  resources:
 #    add-mappings: false
-
 
 #mybatis
 mybatis-plus:
