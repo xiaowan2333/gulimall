@@ -12,7 +12,7 @@ import lombok.Data;
  * 
  * @author XiaoWan
  * @email xiaowan2333@qq.com
- * @date 2022-07-13 10:48:18
+ * @date 2022-07-13 15:41:54
  */
 @Data
 @TableName("mq_message")
