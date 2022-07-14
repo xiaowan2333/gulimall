@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -32,9 +34,33 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public List<CategoryEntity> listWithTree() {
         //找到所有分类列表
-        List<CategoryEntity> categoryEntities = baseMapper.selectList(null);
+        List<CategoryEntity> categorys = baseMapper.selectList(null);
         //过滤出一级标签
-        return categoryEntities;
+        List<CategoryEntity> level1 = categorys.stream().
+                filter(categoryEntity -> categoryEntity.getParentCid()== 0).
+                map(menu->{
+                    menu.setChildren(getChildrens(menu,categorys));
+                    return menu;
+                }).
+                sorted((menu1,menu2)->{
+                    return ((menu1.getSort()==null?0:menu1.getSort()))-(menu2.getSort()==null?0:menu2.getSort());
+                }).
+                collect(Collectors.toList());
+        return level1;
     }
+
+    private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> categorys) {
+        List<CategoryEntity> collect = categorys.stream().filter(categoryEntity -> {
+            //返回所有当前根menu的所有次级子menu
+            return categoryEntity.getParentCid() == root.getCatId();
+        }).map(categoryEntity -> {
+            categoryEntity.setChildren(getChildrens(categoryEntity, categorys));
+            return categoryEntity;
+        }).sorted((menu1, menu2) -> {
+            return ((menu1.getSort() == null ? 0 : menu1.getSort())) - (menu2.getSort() == null ? 0 : menu2.getSort());
+        }).collect(Collectors.toList());
+        return collect;
+    }
+
 
 }
