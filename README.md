@@ -1,11 +1,13 @@
 # gulimall
 
-#### 介绍
+### 介绍
 谷粒商城
 
-#### 软件架构
-test
-
+### 软件架构
+微服务架构
+注册配置中心：nacos
+远程调用：openfeign
+网关：springconfig
 
 #### 安装教程
 
