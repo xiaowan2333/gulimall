@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,10 +50,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return level1;
     }
 
+    @Override
+    public void removeMenuByIds(List<Long> catIds) {
+        //TODO 检查当前menu是否可删除
+        baseMapper.deleteBatchIds(catIds);
+    }
+
+
     private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> categorys) {
         List<CategoryEntity> collect = categorys.stream().filter(categoryEntity -> {
             //返回所有当前根menu的所有次级子menu
-            return categoryEntity.getParentCid() == root.getCatId();
+            return Objects.equals(categoryEntity.getParentCid(),root.getCatId());
         }).map(categoryEntity -> {
             categoryEntity.setChildren(getChildrens(categoryEntity, categorys));
             return categoryEntity;

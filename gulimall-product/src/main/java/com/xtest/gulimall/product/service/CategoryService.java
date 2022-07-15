@@ -18,6 +18,16 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
+    /**
+     * 查询所有menu以树形结构展示
+     * @return
+     */
     List<CategoryEntity> listWithTree();
+
+    /**
+     * 根据catid列表删除menu
+     * @param catIds
+     */
+    void removeMenuByIds(List<Long> catIds);
 }
 

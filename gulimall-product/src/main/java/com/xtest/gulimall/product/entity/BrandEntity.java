@@ -41,7 +41,7 @@ public class BrandEntity implements Serializable {
 	 */
 	private Integer showStatus;
 	/**
-	 * 检索首字母
+	 * 检索首字母，为什么不自动生成Character？
 	 */
 	private String firstLetter;
 	/**
