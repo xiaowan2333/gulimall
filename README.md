@@ -7,7 +7,7 @@
 微服务架构
 注册配置中心：nacos
 远程调用：openfeign
-网关：springconfig
+网关：springgateway
 
 #### 安装教程
 
