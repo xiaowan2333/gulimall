@@ -4,9 +4,8 @@ import com.xtest.common.utils.PageUtils;
 import com.xtest.common.utils.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.management.LockInfo;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,6 +53,28 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public void removeMenuByIds(List<Long> catIds) {
         //TODO 检查当前menu是否可删除
         baseMapper.deleteBatchIds(catIds);
+    }
+
+    /**
+     * 根据catelogId查询出catelogPath
+     * @param catelogId
+     * @return
+     */
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPath = findParentById(catelogId, paths);
+        Collections.reverse(parentPath);
+        Long[] longs = parentPath.toArray(new Long[parentPath.size()]);
+        return longs;
+    }
+    private List<Long> findParentById(Long cateLogId,List<Long> paths){
+        paths.add(cateLogId);
+        CategoryEntity byId = this.getById(cateLogId);
+        if (byId.getParentCid()!=0){
+            findParentById(byId.getParentCid(),paths);
+        }
+        return paths;
     }
 
 

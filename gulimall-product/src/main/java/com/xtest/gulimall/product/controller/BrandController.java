@@ -67,8 +67,8 @@ public class BrandController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
-
+		brandService.updateDetail(brand);
+        //TODO 更新brand表时得更新brand和category表的关联表中冗余字段
         return R.ok();
     }
 
